@@ -6,5 +6,7 @@ package com.zzx.crm.util;
  */
 public class LogUtil {
 
-    public void writeLog(){}
+    public void writeLog(){
+        System.out.println("writeLog...");
+    }
 }
