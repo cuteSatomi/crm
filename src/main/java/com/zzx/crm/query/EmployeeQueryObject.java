@@ -12,4 +12,8 @@ import lombok.Setter;
 public class EmployeeQueryObject {
     private Integer page;
     private Integer rows;
+
+    public Integer getStart() {
+        return (this.page - 1) * (this.rows);
+    }
 }
