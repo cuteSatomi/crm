@@ -4,11 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>客户关系管理系统</title>
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/default/easyui.css"><!-- 样式文件 -->
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui/themes/icon.css"> <!--图标样式  -->
-    <script type="text/javascript" src="/js/jquery-easyui/jquery.min.js"></script> <!-- jQuery核心库 -->
-    <script type="text/javascript" src="/js/jquery-easyui/jquery.easyui.min.js"></script>  <!-- EasyUI核心库 -->
-    <script type="text/javascript" src="/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script> <!-- 语言包 -->
+    <%@include file="common.jsp"%>
     <script type="text/javascript" src="/js/views/index.js"></script>
 </head>
 <body>

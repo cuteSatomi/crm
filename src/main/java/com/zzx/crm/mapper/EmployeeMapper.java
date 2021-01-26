@@ -1,6 +1,9 @@
 package com.zzx.crm.mapper;
 
 import com.zzx.crm.domain.Employee;
+import com.zzx.crm.query.EmployeeQueryObject;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface EmployeeMapper {
@@ -9,4 +12,10 @@ public interface EmployeeMapper {
     Employee selectByPrimaryKey(Long id);
     List<Employee> selectAll();
     int updateByPrimaryKey(Employee record);
+
+    Employee getEmployeeForLogin(@Param("username") String username,@Param("password") String password);
+
+    Long queryForPageCount(EmployeeQueryObject qo);
+
+    List<Employee> queryForPage(EmployeeQueryObject qo);
 }

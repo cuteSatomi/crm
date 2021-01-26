@@ -1,6 +1,8 @@
 package com.zzx.crm.service;
 
 import com.zzx.crm.domain.Employee;
+import com.zzx.crm.page.PageResult;
+import com.zzx.crm.query.EmployeeQueryObject;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ public interface EmployeeService {
     Employee selectByPrimaryKey(Long id);
     List<Employee> selectAll();
     int updateByPrimaryKey(Employee record);
+
+    Employee getEmployeeForLogin(String username, String password);
+
+    PageResult queryForPage(EmployeeQueryObject qo);
 }
