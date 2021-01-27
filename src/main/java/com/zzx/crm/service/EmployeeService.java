@@ -20,4 +20,6 @@ public interface EmployeeService {
     Employee getEmployeeForLogin(String username, String password);
 
     PageResult queryForPage(EmployeeQueryObject qo);
+
+    void updateStateByPrimaryKey(Long id);
 }

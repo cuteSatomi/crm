@@ -18,4 +18,6 @@ public interface EmployeeMapper {
     Long queryForPageCount(EmployeeQueryObject qo);
 
     List<Employee> queryForPage(EmployeeQueryObject qo);
+
+    void updateStateByPrimaryKey(Long id);
 }

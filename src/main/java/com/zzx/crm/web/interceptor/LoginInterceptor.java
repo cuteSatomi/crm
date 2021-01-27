@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录拦截器
+ *
  * @author zzx
  * @date 2021-01-26 16:14:39
  */
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 将request设置进threadLocal，方便后续日志操作
+        UserContext.set(request);
         Employee employee = (Employee) request.getSession().getAttribute(UserContext.USER_IN_SESSION);
-        if(employee == null){
+        if (employee == null) {
             response.sendRedirect("/login.jsp");
             return false;
         }

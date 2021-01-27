@@ -63,4 +63,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return new PageResult(count.intValue(), result);
     }
+
+    @Override
+    public void updateStateByPrimaryKey(Long id) {
+        employeeMapper.updateStateByPrimaryKey(id);
+    }
 }

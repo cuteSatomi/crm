@@ -32,15 +32,15 @@
         update employee
         set username = #{username},
           realname = #{realname},
-          password = #{password},
           tel = #{tel},
           email = #{email},
           dept_id = #{dept.id},
-          input_time = #{inputTime},
-          state = #{state},
-          admin = #{admin}
+          input_time = #{inputTime}
         where id = #{id}
     </update>
+    <delete id="updateStateByPrimaryKey" parameterType="java.lang.Long">
+        update employee set state = 0 where id = #{id}
+    </delete>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select id, username, realname, password, tel, email, dept_id, input_time, state,
         admin
@@ -55,9 +55,19 @@
     <select id="getEmployeeForLogin" resultMap="BaseResultMap">
         select * from employee where username=#{username} and password=#{password}
     </select>
-    <sql id="where_sql"></sql>
+    <sql id="where_sql">
+        <where>
+            <if test="keyWord!=null">
+                (
+                    e.username like concat('%',#{keyWord},'%')
+                    or e.realname like concat('%',#{keyWord},'%')
+                    or e.tel like concat('%',#{keyWord},'%')
+                )
+            </if>
+        </where>
+    </sql>
     <select id="queryForPageCount" resultType="java.lang.Long">
-        select count(*) from employee
+        select count(*) from employee e
         <include refid="where_sql"/>
     </select>
     <select id="queryForPage" resultMap="BaseResultMap">
