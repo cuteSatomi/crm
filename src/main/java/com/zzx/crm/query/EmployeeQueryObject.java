@@ -9,12 +9,6 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class EmployeeQueryObject {
-    private Integer page;
-    private Integer rows;
+public class EmployeeQueryObject extends QueryObject {
     private String keyWord;
-
-    public Integer getStart() {
-        return (this.page - 1) * (this.rows);
-    }
 }

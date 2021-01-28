@@ -75,7 +75,7 @@ $(function () {
                 // 如果id有值就是编辑
                 url = "/employee_update";
             } else {
-                url = "/employee_update";
+                url = "/employee_save";
             }
             // 发送异步请求保存员工
             empForm.form("submit", {

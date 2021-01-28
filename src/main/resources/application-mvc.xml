@@ -22,8 +22,13 @@
     <!-- 配置拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*"/>
+            <!-- 之前配置了 /*，只能拦截一级路径，比如输入 localhost:8080/role/ 就不会被拦截到 -->
+            <!-- 配置了 /** 之后又出现新的问题，所有静态资源都被拦截了，因此需要放行 -->
+            <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
             <bean class="com.zzx.crm.web.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
