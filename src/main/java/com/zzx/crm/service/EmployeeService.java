@@ -22,4 +22,6 @@ public interface EmployeeService {
     PageResult queryForPage(EmployeeQueryObject qo);
 
     void updateStateByPrimaryKey(Long id);
+
+    List<Long> queryByEid(Long eid);
 }

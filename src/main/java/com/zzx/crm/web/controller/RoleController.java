@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author zzx
  * @date 2021-01-28 9:47:52
@@ -18,6 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+
+    @RequestMapping("/role_queryForEmp")
+    @ResponseBody
+    public List<Role> queryForEmp() {
+        return roleService.selectAll();
+    }
 
     @RequestMapping("/role_list")
     @ResponseBody

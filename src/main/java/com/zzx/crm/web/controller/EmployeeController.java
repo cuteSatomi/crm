@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author zzx
@@ -22,6 +23,12 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @RequestMapping("/role_queryByEid")
+    @ResponseBody
+    public List<Long> queryByEid(Long eid) {
+        return employeeService.queryByEid(eid);
+    }
 
     @RequestMapping("/employee_delete")
     @ResponseBody

@@ -1,6 +1,7 @@
 package com.zzx.crm.service.impl;
 
 import com.zzx.crm.domain.Employee;
+import com.zzx.crm.domain.Role;
 import com.zzx.crm.mapper.EmployeeMapper;
 import com.zzx.crm.page.PageResult;
 import com.zzx.crm.query.EmployeeQueryObject;
@@ -28,7 +29,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public int insert(Employee record) {
-        return employeeMapper.insert(record);
+        int effectCount = employeeMapper.insert(record);
+        // 需要维护员工与角色中间表的关系
+        for (Role role : record.getRoles()) {
+            employeeMapper.insertRelation(record.getId(), role.getId());
+        }
+        return effectCount;
     }
 
     @Override
@@ -43,6 +49,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public int updateByPrimaryKey(Employee record) {
+        // 执行更新之前需要删除旧的中间表关系并且建立新的中间表关系
+        employeeMapper.deleteRelation(record.getId());
+        for (Role role : record.getRoles()) {
+            employeeMapper.insertRelation(record.getId(), role.getId());
+        }
         return employeeMapper.updateByPrimaryKey(record);
     }
 
@@ -67,5 +78,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void updateStateByPrimaryKey(Long id) {
         employeeMapper.updateStateByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Long> queryByEid(Long eid) {
+        return employeeMapper.queryByEid(eid);
     }
 }

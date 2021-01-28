@@ -20,4 +20,10 @@ public interface EmployeeMapper {
     List<Employee> queryForPage(EmployeeQueryObject qo);
 
     void updateStateByPrimaryKey(Long id);
+
+    void insertRelation(@Param("eid")Long eid,@Param("rid")Long rid);
+
+    List<Long> queryByEid(Long eid);
+
+    void deleteRelation(Long eid);
 }

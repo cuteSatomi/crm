@@ -28,6 +28,9 @@
           #{tel}, #{email}, #{dept.id},
           #{inputTime}, #{state}, #{admin})
     </insert>
+    <insert id="insertRelation">
+        insert into emp_role (e_id, r_id) values (#{eid}, #{rid})
+    </insert>
     <update id="updateByPrimaryKey" parameterType="com.zzx.crm.domain.Employee">
         update employee
         set username = #{username},
@@ -40,6 +43,9 @@
     </update>
     <delete id="updateStateByPrimaryKey" parameterType="java.lang.Long">
         update employee set state = 0 where id = #{id}
+    </delete>
+    <delete id="deleteRelation">
+        delete from emp_role where e_id = #{eid}
     </delete>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select id, username, realname, password, tel, email, dept_id, input_time, state,
@@ -59,9 +65,9 @@
         <where>
             <if test="keyWord!=null">
                 (
-                    e.username like concat('%',#{keyWord},'%')
-                    or e.realname like concat('%',#{keyWord},'%')
-                    or e.tel like concat('%',#{keyWord},'%')
+                e.username like concat('%',#{keyWord},'%')
+                or e.realname like concat('%',#{keyWord},'%')
+                or e.tel like concat('%',#{keyWord},'%')
                 )
             </if>
         </where>
@@ -78,5 +84,8 @@
         <if test="page!=null">
             limit #{start}, #{rows}
         </if>
+    </select>
+    <select id="queryByEid" resultType="long">
+        select r_id from emp_role where e_id = #{eid}
     </select>
 </mapper>

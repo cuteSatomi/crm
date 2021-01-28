@@ -80,6 +80,13 @@ $(function () {
             // 发送异步请求保存员工
             empForm.form("submit", {
                 url: url,
+                onSubmit: function (param) {
+                    // 获取多选框中所有选中的role的id
+                    var ids = $("#emp_roles").combobox("getValues");
+                    for (var i = 0; i < ids.length; i++) {
+                        param["roles[" + i + "].id"] = ids[i];
+                    }
+                },
                 success: function (data) {
                     data = $.parseJSON(data);
                     if (data.success) {
@@ -116,6 +123,14 @@ $(function () {
                     // 给rowData对象设置dept.id属性
                     rowData["dept.id"] = rowData.dept.id;
                 }
+                // 需要发送一个同步请求来回显该员工所拥有的角色信息
+                var html = $.ajax({
+                    url: "/role_queryByEid?eid=" + rowData.id,
+                    async: false
+                }).responseText;
+                // 将json对象转为数组
+                html = $.parseJSON(html);
+                $("#emp_roles").combobox("setValues", html);
                 empForm.form("load", rowData);
             } else {
                 // 没有选中记录则弹出提示信息

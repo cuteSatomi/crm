@@ -37,6 +37,11 @@
                 <td>入职时间</td>
                 <td><input type="text" name="inputTime" class="easyui-datebox"></td>
             </tr>
+            <tr>
+                <td>角色</td>
+                <td><input id="emp_roles" type="text" class="easyui-combobox"
+                           data-options="valueField:'id',textField:'name',url:'/role_queryForEmp',multiple:true"></td>
+            </tr>
         </table>
     </form>
 </div>
