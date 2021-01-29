@@ -15,4 +15,6 @@ public interface PermissionMapper {
     Long queryForPageCount(QueryObject qo);
 
     List<Permission> queryForPage(QueryObject qo);
+
+    List<String> queryByEid(Long eid);
 }

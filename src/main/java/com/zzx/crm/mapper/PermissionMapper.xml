@@ -48,4 +48,12 @@
             limit #{start},#{rows}
         </if>
     </select>
+    <select id="queryByEid" resultType="string">
+        select p.resource from permission p
+        left join role_permission mid on (p.id = mid.p_id)
+        left join role r on (r.id = mid.r_id)
+        where r.id in (
+            select r_id from emp_role where e_id = #{eid}
+        )
+    </select>
 </mapper>

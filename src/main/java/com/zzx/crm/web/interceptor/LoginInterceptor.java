@@ -1,7 +1,10 @@
 package com.zzx.crm.web.interceptor;
 
 import com.zzx.crm.domain.Employee;
+import com.zzx.crm.util.PermissionUtil;
 import com.zzx.crm.util.UserContext;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +26,27 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (employee == null) {
             response.sendRedirect("/login.jsp");
             return false;
+        }
+        if (handler instanceof HandlerMethod) {
+            // 登录成功后，增加对请求的权限控制
+            HandlerMethod method = (HandlerMethod) handler;
+            // 将当前请求转成url表达式
+            String function = method.getBean().getClass().getName() + ":" + method.getMethod().getName();
+            // 调用PermissionUtil的方法来判断当前用户是否有访问该资源的权限
+            Boolean flag = PermissionUtil.checkPermission(function);
+            if (flag) {
+                return true;
+            } else {
+                if (method.getMethod().isAnnotationPresent(ResponseBody.class)) {
+                    // 如果是ajax请求
+                    // 方法上有@ResponseBody则认为是Ajax请求
+                    response.sendRedirect("/nopermission.json");
+                } else {
+                    // 如果是页面，转发的nopermission页面
+                    response.sendRedirect("/nopermission.jsp");
+                }
+                return false;
+            }
         }
         return true;
     }

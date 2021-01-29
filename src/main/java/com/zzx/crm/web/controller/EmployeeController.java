@@ -1,10 +1,14 @@
 package com.zzx.crm.web.controller;
 
 import com.zzx.crm.domain.Employee;
+import com.zzx.crm.domain.Menu;
 import com.zzx.crm.page.PageResult;
 import com.zzx.crm.query.EmployeeQueryObject;
 import com.zzx.crm.service.EmployeeService;
+import com.zzx.crm.service.MenuService;
+import com.zzx.crm.service.PermissionService;
 import com.zzx.crm.util.AjaxResult;
+import com.zzx.crm.util.PermissionUtil;
 import com.zzx.crm.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,12 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private MenuService menuService;
 
     @RequestMapping("/role_queryByEid")
     @ResponseBody
@@ -83,7 +93,7 @@ public class EmployeeController {
     }
 
     @RequestMapping("/employee")
-    public String employee() {
+    public String index() {
         return "employee";
     }
 
@@ -96,6 +106,13 @@ public class EmployeeController {
         Employee user = employeeService.getEmployeeForLogin(username, password);
         if (user != null) {
             request.getSession().setAttribute(UserContext.USER_IN_SESSION, user);
+            // 根据员工id查询所有的权限集合，存入session
+            List<String> userPermissions = permissionService.queryByEid(user.getId());
+            request.getSession().setAttribute(UserContext.PERMISSION_IN_SESSION, userPermissions);
+            // 登录成功同时查询所有的菜单信息存入session中
+            List<Menu> menus = menuService.queryForRoot();
+            PermissionUtil.checkMenuPermission(menus);
+            request.getSession().setAttribute(UserContext.MENU_IN_SESSION, menus);
             result = new AjaxResult("登陆成功", true);
         } else {
             result = new AjaxResult("登陆失败，用户名或密码有误", false);

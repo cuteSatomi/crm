@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.zzx.com/crm/permission" prefix="myFn" %>
 <html>
 <head>
     <title>员工管理</title>
@@ -48,9 +50,15 @@
 <!-- 数据表格的顶部按钮 -->
 <div id="emp_datagrid_bt">
     <!-- 增删改查的按钮 -->
-    <a class="easyui-linkbutton" iconCls="icon-add" plain="true" data-cmd="add">新增</a>
-    <a id="emp_datagrid_bt_edit" class="easyui-linkbutton" iconCls="icon-edit" plain="true" data-cmd="edit">编辑</a>
-    <a id="emp_datagrid_bt_del" class="easyui-linkbutton" iconCls="icon-remove" plain="true" data-cmd="del">离职</a>
+    <c:if test="${myFn:checkPermission('com.zzx.crm.web.controller.EmployeeController:save')}">
+        <a class="easyui-linkbutton" iconCls="icon-add" plain="true" data-cmd="add">新增</a>
+    </c:if>
+    <c:if test="${myFn:checkPermission('com.zzx.crm.web.controller.EmployeeController:update')}">
+        <a id="emp_datagrid_bt_edit" class="easyui-linkbutton" iconCls="icon-edit" plain="true" data-cmd="edit">编辑</a>
+    </c:if>
+    <c:if test="${myFn:checkPermission('com.zzx.crm.web.controller.EmployeeController:delete')}">
+        <a id="emp_datagrid_bt_del" class="easyui-linkbutton" iconCls="icon-remove" plain="true" data-cmd="del">离职</a>
+    </c:if>
     <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" data-cmd="reload">刷新</a>
 
     <!-- 高级查询 -->

@@ -1,8 +1,10 @@
 $(function(){
 	$("#menuTree").tree({
-		url:'/js/data/tree.json',
+		url:'/menu',
 		onClick:function(node){
-			console.log(node);
+			if(node.attributes){
+				node.attributes = $.parseJSON(node.attributes);
+			}
 			//在选项中添加新面板
 			var myTab = $("#myTabs");
 			//在选项卡中是否已经有该节点的面板.

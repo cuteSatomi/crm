@@ -18,4 +18,6 @@ public interface PermissionService {
     int updateByPrimaryKey(Permission record);
 
     PageResult queryForPage(PermissionQueryObject qo);
+
+    List<String> queryByEid(Long eid);
 }

@@ -59,4 +59,9 @@ public class PermissionServiceImpl implements PermissionService {
 
         return new PageResult(count.intValue(), result);
     }
+
+    @Override
+    public List<String> queryByEid(Long eid) {
+        return permissionMapper.queryByEid(eid);
+    }
 }
